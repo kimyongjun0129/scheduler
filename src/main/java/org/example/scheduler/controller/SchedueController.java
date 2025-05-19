@@ -1,8 +1,6 @@
 package org.example.scheduler.controller;
 
-import org.example.scheduler.dto.CreateScheduleRequestDto;
-import org.example.scheduler.dto.CreateScheduleResponseDto;
-import org.example.scheduler.dto.FindScheduleResponseDto;
+import org.example.scheduler.dto.*;
 import org.example.scheduler.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +25,16 @@ public class SchedueController {
             @PathVariable Long id
     ) {
         FindScheduleResponseDto schedule = scheduleService.findSchedule(id);
+        return new ResponseEntity<>(schedule, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UpdateScheduleResponseDto> updateSchedule(
+            @PathVariable Long id,
+            @RequestBody UpdateScheduleRequestDto requestDto
+    ) {
+        UpdateScheduleResponseDto schedule = scheduleService.updateSchedule(id, requestDto);
+
         return new ResponseEntity<>(schedule, HttpStatus.OK);
     }
 }

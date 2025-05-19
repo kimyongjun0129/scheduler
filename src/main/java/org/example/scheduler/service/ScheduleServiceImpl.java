@@ -1,8 +1,6 @@
 package org.example.scheduler.service;
 
-import org.example.scheduler.dto.CreateScheduleRequestDto;
-import org.example.scheduler.dto.CreateScheduleResponseDto;
-import org.example.scheduler.dto.FindScheduleResponseDto;
+import org.example.scheduler.dto.*;
 import org.example.scheduler.entity.Schedule;
 import org.example.scheduler.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
@@ -32,5 +30,21 @@ public class ScheduleServiceImpl implements ScheduleService{
     public FindScheduleResponseDto findSchedule(Long id) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
         return new FindScheduleResponseDto(schedule);
+    }
+
+    @Override
+    public UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto requestDto) {
+        Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        if(!schedule.getPassword().equals(requestDto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This password does not the same as schedule password.");
+        }
+
+        schedule.updateTitle(requestDto.getTitle());
+        schedule.updateContent(requestDto.getContent());
+
+        Schedule savedSchedule = scheduleRepository.save(schedule);
+
+        return new UpdateScheduleResponseDto(savedSchedule);
     }
 }
