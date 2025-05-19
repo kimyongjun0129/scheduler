@@ -2,6 +2,7 @@ package org.example.scheduler.service;
 
 import org.example.scheduler.dto.CreateScheduleRequestDto;
 import org.example.scheduler.dto.CreateScheduleResponseDto;
+import org.example.scheduler.dto.FindScheduleResponseDto;
 import org.example.scheduler.entity.Schedule;
 import org.example.scheduler.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,14 @@ public class ScheduleServiceImpl implements ScheduleService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no content.");
         }
 
-        Schedule schedule = scheduleRepository.saveSchedule(requestDto.getUsername(), requestDto.getTitle(), requestDto.getContent(), requestDto.getPassword());
+        Schedule schedule = new Schedule(requestDto.getUsername(), requestDto.getTitle(), requestDto.getContent(), requestDto.getPassword());
+        Schedule savedSchedule = scheduleRepository.save(schedule);
 
-        if (schedule == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This schedule Does not exists");
-        }
+        return new CreateScheduleResponseDto(savedSchedule);
+    }
 
-        return new CreateScheduleResponseDto(schedule);
+    public FindScheduleResponseDto findSchedule(Long id) {
+        Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
+        return new FindScheduleResponseDto(schedule);
     }
 }
