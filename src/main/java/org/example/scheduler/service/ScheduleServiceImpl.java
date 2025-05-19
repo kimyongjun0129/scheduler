@@ -47,4 +47,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         return new UpdateScheduleResponseDto(savedSchedule);
     }
+
+    @Override
+    public void deleteSchedule(Long id, DeleteScheduleRequestDto requestDto) {
+        Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        if(!schedule.getPassword().equals(requestDto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This password does not the same as schedule password.");
+        }
+
+        scheduleRepository.delete(schedule);
+    }
 }
