@@ -2,6 +2,7 @@ package org.example.scheduler.user.service;
 
 import org.example.scheduler.user.dto.CreateUserRequestDto;
 import org.example.scheduler.user.dto.CreateUserResponseDto;
+import org.example.scheduler.user.dto.FindUserResponseDto;
 import org.example.scheduler.user.entity.User;
 import org.example.scheduler.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,12 @@ public class UserServiceImpl implements UserService{
         User savedUser = userRepository.save(user);
 
         return new CreateUserResponseDto(savedUser);
+    }
+
+    @Override
+    public FindUserResponseDto findUserById(Long id) {
+        User user = userRepository.findByIdOrElseThrow(id);
+
+        return new FindUserResponseDto(user);
     }
 }
