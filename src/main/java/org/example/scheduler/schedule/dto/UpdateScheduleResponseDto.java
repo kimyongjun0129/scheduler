@@ -1,7 +1,7 @@
-package org.example.scheduler.dto;
+package org.example.scheduler.schedule.dto;
 
 import lombok.Getter;
-import org.example.scheduler.entity.Schedule;
+import org.example.scheduler.schedule.entity.Schedule;
 
 @Getter
 public class UpdateScheduleResponseDto {

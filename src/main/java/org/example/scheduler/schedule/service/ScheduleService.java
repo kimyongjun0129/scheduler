@@ -1,6 +1,6 @@
-package org.example.scheduler.service;
+package org.example.scheduler.schedule.service;
 
-import org.example.scheduler.dto.*;
+import org.example.scheduler.schedule.dto.*;
 
 public interface ScheduleService{
     CreateScheduleResponseDto saveSchedule(CreateScheduleRequestDto requestDto);

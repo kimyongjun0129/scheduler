@@ -1,8 +1,8 @@
-package org.example.scheduler.service;
+package org.example.scheduler.schedule.service;
 
-import org.example.scheduler.dto.*;
-import org.example.scheduler.entity.Schedule;
-import org.example.scheduler.repository.ScheduleRepository;
+import org.example.scheduler.schedule.dto.*;
+import org.example.scheduler.schedule.entity.Schedule;
+import org.example.scheduler.schedule.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,6 +35,10 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto requestDto) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        if(requestDto.getTitle() == null || requestDto.getContent() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no content.");
+        }
 
         if(!schedule.getPassword().equals(requestDto.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This password does not the same as schedule password.");

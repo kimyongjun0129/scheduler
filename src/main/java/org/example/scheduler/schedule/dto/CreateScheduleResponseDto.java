@@ -1,8 +1,7 @@
-package org.example.scheduler.dto;
+package org.example.scheduler.schedule.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.example.scheduler.entity.Schedule;
+import org.example.scheduler.schedule.entity.Schedule;
 
 import java.util.Date;
 
