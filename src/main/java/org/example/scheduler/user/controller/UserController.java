@@ -1,9 +1,7 @@
 package org.example.scheduler.user.controller;
 
 import jakarta.validation.Valid;
-import org.example.scheduler.user.dto.CreateUserRequestDto;
-import org.example.scheduler.user.dto.CreateUserResponseDto;
-import org.example.scheduler.user.dto.FindUserResponseDto;
+import org.example.scheduler.user.dto.*;
 import org.example.scheduler.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +30,15 @@ public class UserController {
         FindUserResponseDto userResponseDto = userService.findUserById(id);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UpdateUserResponseDto> updateUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUserRequestDto requestDto
+    ) {
+        UpdateUserResponseDto updateUserResponseDto = userService.updateUser(id, requestDto);
+
+        return new ResponseEntity<>(updateUserResponseDto,HttpStatus.OK);
     }
 }
