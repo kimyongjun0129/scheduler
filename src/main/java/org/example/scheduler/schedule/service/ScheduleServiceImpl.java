@@ -17,11 +17,11 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     public CreateScheduleResponseDto saveSchedule(CreateScheduleRequestDto requestDto) {
-        if (requestDto.getUsername() == null || requestDto.getTitle() == null || requestDto.getContent() == null || requestDto.getPassword() == null) {
+        if (requestDto.getUserId() == null || requestDto.getTitle() == null || requestDto.getContent() == null || requestDto.getPassword() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no content.");
         }
 
-        Schedule schedule = new Schedule(requestDto.getUsername(), requestDto.getTitle(), requestDto.getContent(), requestDto.getPassword());
+        Schedule schedule = new Schedule(requestDto.getUserId(), requestDto.getTitle(), requestDto.getContent(), requestDto.getPassword());
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new CreateScheduleResponseDto(savedSchedule);

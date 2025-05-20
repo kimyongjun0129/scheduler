@@ -9,7 +9,7 @@ import java.util.Date;
 public class FindScheduleResponseDto {
     private final Long id;
     private final String title;
-    private final String username;
+    private final Long userId;
     private final String content;
     private final Date createdAt;
     private final Date updatedAt;
@@ -17,7 +17,7 @@ public class FindScheduleResponseDto {
     public FindScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.title = schedule.getTitle();
-        this.username = schedule.getUsername();
+        this.userId = schedule.getUserId();
         this.content = schedule.getContent();
         this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();

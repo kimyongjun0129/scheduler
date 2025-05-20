@@ -1,10 +1,11 @@
 package org.example.scheduler.schedule.dto;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
 public class DeleteScheduleRequestDto {
-    @Column(nullable = false)
+    @NotNull
     private String password;
 }
