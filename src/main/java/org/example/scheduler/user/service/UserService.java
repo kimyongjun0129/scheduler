@@ -6,4 +6,5 @@ public interface UserService {
     CreateUserResponseDto saveUser(CreateUserRequestDto requestDto);
     FindUserResponseDto findUserById(Long id);
     UpdateUserResponseDto updateUser(Long id, UpdateUserRequestDto requestDto);
+    void deleteUser (Long id);
 }
