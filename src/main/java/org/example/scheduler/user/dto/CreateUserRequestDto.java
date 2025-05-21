@@ -12,4 +12,6 @@ public class CreateUserRequestDto {
     private final String username;
     @Email(message = "이메일 형식이 올바르지 않습니다")
     private final String email;
+    @NotNull
+    private final String password;
 }

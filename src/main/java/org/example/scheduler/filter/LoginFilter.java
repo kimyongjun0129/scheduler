@@ -23,7 +23,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         String requestURL = httpRequest.getRequestURI();
 
-        HttpServletResponse httpResponse = (HttpServletResponse) servletRequest;
+        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         // WHITE LIST에 포함되지 않은 경우 실행
         if(!isWhiteList(requestURL)) {
@@ -36,7 +36,7 @@ public class LoginFilter implements Filter {
             log.info("로그인에 성공했습니다.");
         }
 
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(httpRequest, httpResponse);
     }
 
     private boolean isWhiteList(String requestURI) {
