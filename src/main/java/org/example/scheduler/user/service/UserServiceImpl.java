@@ -42,7 +42,9 @@ public class UserServiceImpl implements UserService{
             user.updateEmail(requestDto.getEmail());
         }
 
-        return new UpdateUserResponseDto(user);
+        User savedUser = userRepository.save(user);
+
+        return new UpdateUserResponseDto(savedUser);
     }
 
     @Override
