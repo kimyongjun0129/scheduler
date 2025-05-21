@@ -10,12 +10,25 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
-    public FilterRegistrationBean customFilter() {
+    public FilterRegistrationBean loginFilter() {
         FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
         // Filter 등록
         filterFilterRegistrationBean.setFilter(new LoginFilter());
         // Filter 순서 설정
         filterFilterRegistrationBean.setOrder(1);
+        // 전체 URL 에 Filter 적용
+        filterFilterRegistrationBean.addUrlPatterns("/*");
+
+        return filterFilterRegistrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean userAuthorizationFilter() {
+        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
+        // Filter 등록
+        filterFilterRegistrationBean.setFilter(new UserAuthorizationFilter());
+        // Filter 순서 설정
+        filterFilterRegistrationBean.setOrder(2);
         // 전체 URL 에 Filter 적용
         filterFilterRegistrationBean.addUrlPatterns("/*");
 

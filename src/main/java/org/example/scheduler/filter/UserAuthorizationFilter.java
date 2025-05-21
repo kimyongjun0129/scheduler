@@ -5,14 +5,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.PatternMatchUtils;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+
+import static org.example.scheduler.filter.LoginFilter.isWhiteList;
 
 @Slf4j
-public class LoginFilter implements Filter {
-
-    private static final String[] WHITE_LIST = {"/api/users", "/api/login", "/api/logout"};
+public class UserAuthorizationFilter implements Filter {
 
     @Override
     public void doFilter(
@@ -21,25 +21,22 @@ public class LoginFilter implements Filter {
             FilterChain filterChain
     ) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-        String requestURL = httpRequest.getRequestURI();
-
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
-        // WHITE LIST에 포함되지 않은 경우 실행
+        String requestURL = httpRequest.getRequestURI();
+
         if(!isWhiteList(requestURL)) {
             HttpSession session = httpRequest.getSession(false);
+            Long loginUserId = (Long) session.getAttribute("login-userId");
 
-            if(session == null || session.getAttribute("login-userId") == null) {
-                throw new RuntimeException("로그인을 먼저 시도해주세요.");
-            }
+            String[] split = requestURL.split("/");
+            String userIdStr = split[split.length-1];
+            Long userId = Long.parseLong(userIdStr);
 
-            log.info("로그인에 성공했습니다.");
+            if (!loginUserId.equals(userId)) throw new AccessDeniedException("다른 사용자의 리소스입니다.");
+
         }
 
         filterChain.doFilter(httpRequest, httpResponse);
-    }
-
-    public static boolean isWhiteList(String requestURI) {
-        return PatternMatchUtils.simpleMatch(WHITE_LIST, requestURI);
     }
 }
