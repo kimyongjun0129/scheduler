@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 
 @Slf4j
@@ -30,7 +31,7 @@ public class LoginFilter implements Filter {
             HttpSession session = httpRequest.getSession(false);
 
             if(session == null || session.getAttribute("login-userId") == null) {
-                throw new RuntimeException("로그인을 먼저 시도해주세요.");
+                throw new AuthenticationException("로그인을 먼저 시도해주세요.");
             }
 
             log.info("로그인에 성공했습니다.");

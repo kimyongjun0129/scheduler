@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping
+    @PostMapping("/login")
     ResponseEntity<String> login(
             @Valid @ModelAttribute LoginRequestDto requestDto,
             HttpServletRequest request
@@ -28,3 +28,4 @@ public class LoginController {
         return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
     }
 }
+

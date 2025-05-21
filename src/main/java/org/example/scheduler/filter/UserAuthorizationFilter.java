@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
 
 import static org.example.scheduler.filter.LoginFilter.isWhiteList;
 
@@ -33,7 +33,7 @@ public class UserAuthorizationFilter implements Filter {
             String userIdStr = split[split.length-1];
             Long userId = Long.parseLong(userIdStr);
 
-            if (!loginUserId.equals(userId)) throw new AccessDeniedException("다른 사용자의 리소스입니다.");
+            if (!loginUserId.equals(userId)) throw new AuthenticationException("다른 사용자의 리소스입니다.");
 
         }
 
