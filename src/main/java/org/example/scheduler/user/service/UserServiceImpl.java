@@ -3,7 +3,9 @@ package org.example.scheduler.user.service;
 import org.example.scheduler.user.dto.*;
 import org.example.scheduler.user.entity.User;
 import org.example.scheduler.user.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -48,8 +50,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id, DeleteUserRequestDto requestDto) {
         User user = userRepository.findByIdOrElseThrow(id);
+
+        if(!user.getPassword().equals(requestDto.getPassword())) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This password is incorrect.");
 
         userRepository.delete(user);
     }
