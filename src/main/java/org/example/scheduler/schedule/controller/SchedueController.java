@@ -1,5 +1,6 @@
 package org.example.scheduler.schedule.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.scheduler.schedule.dto.*;
 import org.example.scheduler.schedule.service.ScheduleService;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,9 @@ public class SchedueController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSchedule(
             @PathVariable Long id,
-            @RequestBody DeleteScheduleRequestDto requestDto
+            HttpServletRequest request
     ) {
-        scheduleService.deleteSchedule(id, requestDto);
+        scheduleService.deleteSchedule(id, request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

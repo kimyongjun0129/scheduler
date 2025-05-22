@@ -1,11 +1,15 @@
 package org.example.scheduler.schedule.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.example.scheduler.schedule.dto.*;
 import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.schedule.repository.ScheduleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.security.sasl.AuthenticationException;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService{
@@ -53,11 +57,19 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     @Override
-    public void deleteSchedule(Long id, DeleteScheduleRequestDto requestDto) {
+    public void deleteSchedule(Long id, HttpServletRequest request) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
 
-        if(!schedule.getPassword().equals(requestDto.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This password does not the same as schedule password.");
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("login-userId") == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 먼저 시도해주세요.");
+        }
+
+        Long loginUserId = (Long) session.getAttribute("login-userId");
+
+        if(!schedule.getUserId().equals(loginUserId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not authorized to delete this schedule.");
         }
 
         scheduleRepository.delete(schedule);

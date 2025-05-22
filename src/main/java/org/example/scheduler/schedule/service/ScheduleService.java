@@ -1,5 +1,6 @@
 package org.example.scheduler.schedule.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.scheduler.schedule.dto.*;
 
 public interface ScheduleService{
@@ -9,5 +10,5 @@ public interface ScheduleService{
 
     UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto requestDto);
 
-    void deleteSchedule(Long id, DeleteScheduleRequestDto requestDto);
+    void deleteSchedule(Long id, HttpServletRequest request);
 }
