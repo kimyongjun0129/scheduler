@@ -2,6 +2,7 @@ package org.example.scheduler.comment.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.example.scheduler.BaseEntity;
 import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.user.entity.User;
@@ -32,5 +33,9 @@ public class Comment extends BaseEntity {
 
     public Comment() {
 
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
     }
 }

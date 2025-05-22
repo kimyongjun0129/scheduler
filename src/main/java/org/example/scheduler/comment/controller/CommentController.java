@@ -2,9 +2,7 @@ package org.example.scheduler.comment.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.example.scheduler.comment.dto.CreateCommentRequestDto;
-import org.example.scheduler.comment.dto.CreateCommentResponseDto;
-import org.example.scheduler.comment.dto.FindCommentResponseDto;
+import org.example.scheduler.comment.dto.*;
 import org.example.scheduler.comment.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +26,16 @@ public class CommentController {
         FindCommentResponseDto findCommentResponseDto = commentService.findCommentById(id, request);
 
         return new ResponseEntity<>(findCommentResponseDto, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UpdateCommentResponseDto> updateComment(
+            @PathVariable Long id,
+            @RequestBody UpdateCommentRequestDto requestDto,
+            HttpServletRequest request
+    ) {
+        UpdateCommentResponseDto updateCommentResponseDto = commentService.updateComment(id, requestDto, request);
+
+        return new ResponseEntity<>(updateCommentResponseDto, HttpStatus.OK);
     }
 }
