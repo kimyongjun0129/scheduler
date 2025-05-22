@@ -10,7 +10,6 @@ import lombok.Getter;
 public class DeleteUserRequestDto {
 
     @NotNull
-    @NotNull
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{10,}$",
             message = "비밀번호는 10자 이상이며, 대소문자, 숫자, 특수문자를 포함해야 합니다."
