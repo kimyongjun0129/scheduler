@@ -13,9 +13,11 @@ public class CreateScheduleRequestDto {
     private Long userId;
 
     @Size(min = 5)
+    @NotNull
     private String title;
 
     @Size(max = 100)
+    @NotNull
     private String content;
 
     @NotNull
