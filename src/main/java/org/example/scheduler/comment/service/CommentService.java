@@ -3,11 +3,9 @@ package org.example.scheduler.comment.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.example.scheduler.comment.dto.*;
 import org.example.scheduler.comment.entity.Comment;
 import org.example.scheduler.comment.repository.CommentRepository;
-import org.example.scheduler.schedule.dto.UpdateScheduleRequestDto;
 import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.schedule.repository.ScheduleRepository;
 import org.example.scheduler.user.entity.User;
@@ -39,32 +37,37 @@ public class CommentService {
     }
 
     public FindCommentResponseDto findCommentById(Long id, HttpServletRequest request) {
-        Comment comment = commentRepository.findByIdOrElseThrow(id);
-        Long userId = comment.getUser().getId();
-
-        HttpSession session = request.getSession();
-
-        Long logInUserId = (Long) session.getAttribute("login-userId");
-
-        if(!userId.equals(logInUserId)) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This user is incorrect.");
+        Comment comment = getAuthorizedComment(id, request);
 
         return new FindCommentResponseDto(comment);
     }
 
     public UpdateCommentResponseDto updateComment (Long id, UpdateCommentRequestDto requestDto, HttpServletRequest request) {
-        Comment comment = commentRepository.findByIdOrElseThrow(id);
-        Long userId = comment.getUser().getId();
-
-        HttpSession session = request.getSession();
-
-        Long logInUserId = (Long) session.getAttribute("login-userId");
-
-        if(!userId.equals(logInUserId)) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This user is incorrect.");
+        Comment comment = getAuthorizedComment(id, request);
 
         comment.updateContent(requestDto.getContent());
 
         Comment savedComment = commentRepository.save(comment);
 
         return new UpdateCommentResponseDto(savedComment);
+    }
+
+    public void deleteComment (Long id, HttpServletRequest request) {
+        Comment comment = getAuthorizedComment(id, request);
+
+        commentRepository.delete(comment);
+    }
+
+    private Comment getAuthorizedComment(Long id, HttpServletRequest request) {
+        Comment comment = commentRepository.findByIdOrElseThrow(id);
+        Long userId = comment.getUser().getId();
+
+        HttpSession session = request.getSession();
+
+        Long logInUserId = (Long) session.getAttribute("login-userId");
+
+        if(!userId.equals(logInUserId)) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This user is incorrect.");
+
+        return comment;
     }
 }
