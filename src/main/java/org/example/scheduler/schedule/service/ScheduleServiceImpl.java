@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.security.sasl.AuthenticationException;
-
 @Service
 public class ScheduleServiceImpl implements ScheduleService{
 
@@ -21,31 +19,37 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
 
     public CreateScheduleResponseDto saveSchedule(CreateScheduleRequestDto requestDto) {
-        if (requestDto.getUserId() == null || requestDto.getTitle() == null || requestDto.getContent() == null || requestDto.getPassword() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no content.");
-        }
 
-        Schedule schedule = new Schedule(requestDto.getUserId(), requestDto.getTitle(), requestDto.getContent(), requestDto.getPassword());
+        Schedule schedule = new Schedule(requestDto.getUserId(), requestDto.getTitle(), requestDto.getContent());
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new CreateScheduleResponseDto(savedSchedule);
     }
 
-    public FindScheduleResponseDto findSchedule(Long id) {
+    public FindScheduleResponseDto findSchedule(Long id, HttpServletRequest request) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
+
+        HttpSession session = request.getSession(false);
+
+        Long loginUserId = (Long) session.getAttribute("login-userId");
+
+        if(!schedule.getUserId().equals(loginUserId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not authorized to find this schedule.");
+        }
+
         return new FindScheduleResponseDto(schedule);
     }
 
     @Override
-    public UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto requestDto) {
+    public UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto requestDto, HttpServletRequest request) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
 
-        if(requestDto.getTitle() == null || requestDto.getContent() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no content.");
-        }
+        HttpSession session = request.getSession(false);
 
-        if(!schedule.getPassword().equals(requestDto.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This password does not the same as schedule password.");
+        Long loginUserId = (Long) session.getAttribute("login-userId");
+
+        if(!schedule.getUserId().equals(loginUserId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not authorized to update this schedule.");
         }
 
         schedule.updateTitle(requestDto.getTitle());
@@ -61,10 +65,6 @@ public class ScheduleServiceImpl implements ScheduleService{
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
 
         HttpSession session = request.getSession(false);
-
-        if (session == null || session.getAttribute("login-userId") == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인을 먼저 시도해주세요.");
-        }
 
         Long loginUserId = (Long) session.getAttribute("login-userId");
 

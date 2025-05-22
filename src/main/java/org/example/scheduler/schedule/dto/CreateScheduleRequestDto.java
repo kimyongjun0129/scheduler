@@ -19,8 +19,4 @@ public class CreateScheduleRequestDto {
     @Size(max = 100)
     @NotNull
     private String content;
-
-    @NotNull
-    @Min(10)
-    private String password;
 }

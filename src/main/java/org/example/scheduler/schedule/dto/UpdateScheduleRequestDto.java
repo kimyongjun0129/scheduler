@@ -14,8 +14,10 @@ public class UpdateScheduleRequestDto {
     private String password;
 
     @Size(min = 5)
+    @NotNull
     private String title;
 
     @Max(100)
+    @NotNull
     private String content;
 }

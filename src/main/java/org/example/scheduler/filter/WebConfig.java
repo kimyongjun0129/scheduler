@@ -21,17 +21,4 @@ public class WebConfig implements WebMvcConfigurer {
 
         return filterFilterRegistrationBean;
     }
-
-    @Bean
-    public FilterRegistrationBean userAuthorizationFilter() {
-        FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        // Filter 등록
-        filterFilterRegistrationBean.setFilter(new UserAuthorizationFilter());
-        // Filter 순서 설정
-        filterFilterRegistrationBean.setOrder(2);
-        // 전체 URL 에 Filter 적용
-        filterFilterRegistrationBean.addUrlPatterns("/*");
-
-        return filterFilterRegistrationBean;
-    }
 }
