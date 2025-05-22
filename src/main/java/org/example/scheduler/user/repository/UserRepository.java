@@ -1,10 +1,8 @@
 package org.example.scheduler.user.repository;
 
-import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 

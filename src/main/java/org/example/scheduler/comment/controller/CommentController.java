@@ -1,15 +1,14 @@
 package org.example.scheduler.comment.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduler.comment.dto.CreateCommentRequestDto;
 import org.example.scheduler.comment.dto.CreateCommentResponseDto;
+import org.example.scheduler.comment.dto.FindCommentResponseDto;
 import org.example.scheduler.comment.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/comments")
@@ -22,5 +21,12 @@ public class CommentController {
     public ResponseEntity<CreateCommentResponseDto> createComment(@RequestBody CreateCommentRequestDto requestDto) {
         CreateCommentResponseDto createCommentResponseDto = commentService.saveComment(requestDto);
         return new ResponseEntity<>(createCommentResponseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FindCommentResponseDto> findCommentById(@PathVariable Long id, HttpServletRequest request) {
+        FindCommentResponseDto findCommentResponseDto = commentService.findCommentById(id, request);
+
+        return new ResponseEntity<>(findCommentResponseDto, HttpStatus.OK);
     }
 }
