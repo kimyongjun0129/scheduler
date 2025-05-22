@@ -1,5 +1,6 @@
 package org.example.scheduler.user.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.example.scheduler.user.dto.*;
 import org.example.scheduler.user.service.UserService;
@@ -26,8 +27,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FindUserResponseDto> findUser(@PathVariable Long id) {
-        FindUserResponseDto userResponseDto = userService.findUserById(id);
+    public ResponseEntity<FindUserResponseDto> findUser(
+            @PathVariable Long id,
+            HttpServletRequest request
+    ) {
+        FindUserResponseDto userResponseDto = userService.findUserById(id, request);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
@@ -35,9 +39,10 @@ public class UserController {
     @PatchMapping("/{id}")
     public ResponseEntity<UpdateUserResponseDto> updateUser(
             @PathVariable Long id,
-            @RequestBody UpdateUserRequestDto requestDto
+            @RequestBody UpdateUserRequestDto requestDto,
+            HttpServletRequest request
     ) {
-        UpdateUserResponseDto updateUserResponseDto = userService.updateUser(id, requestDto);
+        UpdateUserResponseDto updateUserResponseDto = userService.updateUser(id, requestDto, request);
 
         return new ResponseEntity<>(updateUserResponseDto,HttpStatus.OK);
     }
@@ -45,9 +50,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(
             @PathVariable Long id,
-            @RequestBody DeleteUserRequestDto requestDto
+            @RequestBody DeleteUserRequestDto requestDto,
+            HttpServletRequest request
     ) {
-        userService.deleteUser(id, requestDto);
+        userService.deleteUser(id, requestDto, request);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,5 +1,7 @@
 package org.example.scheduler.user.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.example.scheduler.user.dto.*;
 import org.example.scheduler.user.entity.User;
 import org.example.scheduler.user.repository.UserRepository;
@@ -26,22 +28,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public FindUserResponseDto findUserById(Long id) {
+    public FindUserResponseDto findUserById(Long id, HttpServletRequest request) {
         User user = userRepository.findByIdOrElseThrow(id);
+
+        HttpSession session = request.getSession(false);
+
+        Long loginUserId = (Long) session.getAttribute("login-userId");
+
+        if(!user.getId().equals(loginUserId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not authorized to find this user.");
+        }
 
         return new FindUserResponseDto(user);
     }
 
     @Override
-    public UpdateUserResponseDto updateUser(Long id, UpdateUserRequestDto requestDto) {
+    public UpdateUserResponseDto updateUser(Long id, UpdateUserRequestDto requestDto, HttpServletRequest request) {
         User user = userRepository.findByIdOrElseThrow(id);
 
-        if (requestDto.getUsername() != null) {
-            user.updateUsername(requestDto.getUsername());
-        }
+        HttpSession session = request.getSession(false);
 
-        if (requestDto.getEmail() != null) {
-            user.updateEmail(requestDto.getEmail());
+        Long loginUserId = (Long) session.getAttribute("login-userId");
+
+        if(!user.getId().equals(loginUserId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not authorized to update this user.");
         }
 
         User savedUser = userRepository.save(user);
@@ -50,8 +60,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(Long id, DeleteUserRequestDto requestDto) {
+    public void deleteUser(Long id, DeleteUserRequestDto requestDto, HttpServletRequest request) {
         User user = userRepository.findByIdOrElseThrow(id);
+
+        HttpSession session = request.getSession(false);
+
+        Long loginUserId = (Long) session.getAttribute("login-userId");
+
+        if(!user.getId().equals(loginUserId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This user is not authorized to delete this user.");
+        }
 
         if(!user.getPassword().equals(requestDto.getPassword())) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This password is incorrect.");
 
