@@ -18,6 +18,5 @@ public class CreateUserResponseDto {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.createdAt = user.getCreatedAt();
-        this.updatedAt = user.getUpdatedAt();
     }
 }

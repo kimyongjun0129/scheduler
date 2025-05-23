@@ -11,7 +11,6 @@ public class FindScheduleResponseDto {
     private final String title;
     private final Long userId;
     private final String content;
-    private final Date createdAt;
     private final Date updatedAt;
 
     public FindScheduleResponseDto(Schedule schedule) {
@@ -19,7 +18,6 @@ public class FindScheduleResponseDto {
         this.title = schedule.getTitle();
         this.userId = schedule.getUser().getId();
         this.content = schedule.getContent();
-        this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();
     }
 }

@@ -12,7 +12,6 @@ public class CreateCommentResponseDto {
     private final Long userId;
     private final Long scheduleId;
     private final Date createdAt;
-    private final Date updatedAt;
 
     public CreateCommentResponseDto(Comment comment) {
         this.id = comment.getId();
@@ -20,6 +19,5 @@ public class CreateCommentResponseDto {
         this.userId = comment.getUser().getId();
         this.scheduleId = comment.getSchedule().getId();
         this.createdAt = comment.getCreatedAt();
-        this.updatedAt = comment.getUpdatedAt();
     }
 }
