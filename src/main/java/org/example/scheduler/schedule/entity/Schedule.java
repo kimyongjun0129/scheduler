@@ -3,6 +3,7 @@ package org.example.scheduler.schedule.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.example.scheduler.BaseEntity;
+import org.example.scheduler.user.entity.User;
 
 
 @Entity
@@ -13,8 +14,9 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long userId;
+    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne
+    private User user;
 
     @Column(nullable = false)
     private String title;
@@ -24,8 +26,8 @@ public class Schedule extends BaseEntity {
 
     public Schedule() {}
 
-    public Schedule(Long userId, String title, String content) {
-        this.userId = userId;
+    public Schedule(User user, String title, String content) {
+        this.user = user;
         this.title = title;
         this.content = content;
     }

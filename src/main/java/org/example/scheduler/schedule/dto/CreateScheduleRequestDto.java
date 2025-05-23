@@ -8,9 +8,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateScheduleRequestDto {
-    @NotNull
-    private Long userId;
-
     @Size(min = 5)
     @NotNull
     private String title;

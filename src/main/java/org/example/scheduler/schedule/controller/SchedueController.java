@@ -17,8 +17,11 @@ public class SchedueController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateScheduleResponseDto> createSchedule (@RequestBody CreateScheduleRequestDto requestDto) {
-        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto), HttpStatus.CREATED);
+    public ResponseEntity<CreateScheduleResponseDto> createSchedule (
+            @RequestBody CreateScheduleRequestDto requestDto,
+            HttpServletRequest request
+    ) {
+        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto, request), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

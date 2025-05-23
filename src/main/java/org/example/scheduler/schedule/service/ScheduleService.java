@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.example.scheduler.schedule.dto.*;
 
 public interface ScheduleService{
-    CreateScheduleResponseDto saveSchedule(CreateScheduleRequestDto requestDto);
+    CreateScheduleResponseDto saveSchedule(CreateScheduleRequestDto requestDto, HttpServletRequest request);
 
     FindScheduleResponseDto findSchedule(Long id, HttpServletRequest request);
 

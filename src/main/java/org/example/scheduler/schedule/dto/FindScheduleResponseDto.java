@@ -17,7 +17,7 @@ public class FindScheduleResponseDto {
     public FindScheduleResponseDto(Schedule schedule) {
         this.id = schedule.getId();
         this.title = schedule.getTitle();
-        this.userId = schedule.getUserId();
+        this.userId = schedule.getUser().getId();
         this.content = schedule.getContent();
         this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();
