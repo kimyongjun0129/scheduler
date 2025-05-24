@@ -2,7 +2,7 @@ package org.example.scheduler.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.example.scheduler.BaseEntity;
+import org.example.scheduler.common.entity.BaseEntity;
 
 @Getter
 @Entity

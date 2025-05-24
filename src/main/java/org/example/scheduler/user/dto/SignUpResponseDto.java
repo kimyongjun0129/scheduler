@@ -6,14 +6,14 @@ import org.example.scheduler.user.entity.User;
 import java.util.Date;
 
 @Getter
-public class CreateUserResponseDto {
+public class SignUpResponseDto {
     private final Long id;
     private final String username;
     private final String email;
     private final Date createdAt;
     private final Date updatedAt;
 
-    public CreateUserResponseDto(User user) {
+    public SignUpResponseDto(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();

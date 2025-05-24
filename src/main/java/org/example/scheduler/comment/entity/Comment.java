@@ -2,8 +2,7 @@ package org.example.scheduler.comment.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
-import org.example.scheduler.BaseEntity;
+import org.example.scheduler.common.entity.BaseEntity;
 import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.user.entity.User;
 

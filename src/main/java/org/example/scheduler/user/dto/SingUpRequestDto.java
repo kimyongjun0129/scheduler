@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateUserRequestDto {
+public class SingUpRequestDto {
     @NotNull
     @Size(max = 100)
     private final String username;

@@ -10,9 +10,13 @@ import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.schedule.repository.ScheduleRepository;
 import org.example.scheduler.user.entity.User;
 import org.example.scheduler.user.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -40,6 +44,10 @@ public class CommentService {
         Comment comment = getAuthorizedComment(id, request);
 
         return new FindCommentResponseDto(comment);
+    }
+
+    public Page<Comment> findCommentAll(Pageable pageable, HttpServletRequest request) {
+        return commentRepository.findAllBy(pageable);
     }
 
     public UpdateCommentResponseDto updateComment (Long id, UpdateCommentRequestDto requestDto, HttpServletRequest request) {

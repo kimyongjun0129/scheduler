@@ -1,7 +1,6 @@
 package org.example.scheduler.user.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.example.scheduler.user.dto.*;
 import org.example.scheduler.user.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -16,14 +15,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @PostMapping
-    public ResponseEntity<CreateUserResponseDto> createUser(@RequestBody @Valid CreateUserRequestDto requestDto) {
-
-        CreateUserResponseDto createUserResponseDto = userService.saveUser(requestDto);
-
-        return new ResponseEntity<>(createUserResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

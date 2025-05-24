@@ -1,6 +1,7 @@
-package org.example.scheduler.filter;
+package org.example.scheduler.common.config;
 
 import jakarta.servlet.Filter;
+import org.example.scheduler.common.filter.LoginFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

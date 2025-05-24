@@ -1,4 +1,4 @@
-package org.example.scheduler.filter;
+package org.example.scheduler.common.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
