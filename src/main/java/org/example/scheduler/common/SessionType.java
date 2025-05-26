@@ -1,5 +1,5 @@
 package org.example.scheduler.common;
 
-public enum SessionType {
-    USER
+public abstract class SessionType {
+    public static final String USER = "USER";
 }
