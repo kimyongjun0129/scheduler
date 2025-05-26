@@ -9,6 +9,7 @@ import org.example.scheduler.user.entity.User;
 import org.example.scheduler.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public FindUserResponseDto findUserById(Long id, HttpServletRequest request) {
         User user = userRepository.findByIdOrElseThrow(id);
 
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public UpdateUserResponseDto updateUser(Long id, UpdateUserRequestDto requestDto, HttpServletRequest request) {
         User user = userRepository.findByIdOrElseThrow(id);
 
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id, DeleteUserRequestDto requestDto, HttpServletRequest request) {
         User user = userRepository.findByIdOrElseThrow(id);
 

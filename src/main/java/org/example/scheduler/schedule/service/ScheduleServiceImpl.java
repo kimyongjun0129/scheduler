@@ -10,6 +10,7 @@ import org.example.scheduler.user.entity.User;
 import org.example.scheduler.user.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -32,6 +33,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         return new CreateScheduleResponseDto(savedSchedule);
     }
 
+    @Transactional
     public FindScheduleResponseDto findSchedule(Long id, HttpServletRequest request) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
 
@@ -47,7 +49,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         return new FindScheduleResponseDto(schedule);
     }
 
-    @Override
+    @Transactional
     public UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto requestDto, HttpServletRequest request) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
 
@@ -68,7 +70,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         return new UpdateScheduleResponseDto(savedSchedule);
     }
 
-    @Override
+    @Transactional
     public void deleteSchedule(Long id, HttpServletRequest request) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(id);
 
