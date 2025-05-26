@@ -48,10 +48,6 @@ public class CommentService {
         return new FindCommentResponseDto(comment);
     }
 
-    public Page<Comment> findCommentAll(Pageable pageable, HttpServletRequest request) {
-        return commentRepository.findAllBy(pageable);
-    }
-
     @Transactional
     public UpdateCommentResponseDto updateComment (Long id, UpdateCommentRequestDto requestDto, HttpServletRequest request) {
         Comment comment = getAuthorizedComment(id, request);

@@ -35,16 +35,6 @@ public class CommentController {
         return new ResponseEntity<>(findCommentResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<Comment>> findCommentAll(
-            @PageableDefault(page = 0, size = 10, sort = "updatedAt", direction = Sort.Direction.DESC) Pageable pageable,
-            HttpServletRequest request
-    ) {
-        Page<Comment> comments = commentService.findCommentAll(pageable, request);
-
-        return new ResponseEntity<>(comments, HttpStatus.OK);
-    }
-
     @PatchMapping("/{id}")
     public ResponseEntity<UpdateCommentResponseDto> updateComment(
             @PathVariable Long id,
