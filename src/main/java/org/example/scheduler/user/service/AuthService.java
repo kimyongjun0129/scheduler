@@ -3,6 +3,7 @@ package org.example.scheduler.user.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.scheduler.common.SessionType;
 import org.example.scheduler.common.security.PasswordEncoder;
 import org.example.scheduler.user.dto.SingUpRequestDto;
 import org.example.scheduler.user.dto.SignUpResponseDto;
@@ -44,6 +45,6 @@ public class AuthService {
 
         HttpSession session = request.getSession();
 
-        session.setAttribute("login-userId", user.getId());
+        session.setAttribute(SessionType.USER, user.getId());
     }
 }

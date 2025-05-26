@@ -3,6 +3,7 @@ package org.example.scheduler.schedule.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.scheduler.common.SessionType;
 import org.example.scheduler.schedule.dto.*;
 import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.schedule.repository.ScheduleRepository;
@@ -23,7 +24,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     public CreateScheduleResponseDto saveSchedule(CreateScheduleRequestDto requestDto, HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
-        Long logInUserId = (Long) session.getAttribute("login-userId");
+        Long logInUserId = (Long) session.getAttribute(SessionType.USER);
 
         User loginUser = userRepository.findByIdOrElseThrow(logInUserId);
 
@@ -39,7 +40,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         HttpSession session = request.getSession(false);
 
-        Long loginUserId = (Long) session.getAttribute("login-userId");
+        Long loginUserId = (Long) session.getAttribute(SessionType.USER);
 
         Long scheduleOwnerId = schedule.getUser().getId();
         if(!scheduleOwnerId.equals(loginUserId)) {
@@ -55,7 +56,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         HttpSession session = request.getSession(false);
 
-        Long loginUserId = (Long) session.getAttribute("login-userId");
+        Long loginUserId = (Long) session.getAttribute(SessionType.USER);
 
         Long scheduleOwnerId = schedule.getUser().getId();
         if(!scheduleOwnerId.equals(loginUserId)) {
@@ -76,7 +77,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         HttpSession session = request.getSession(false);
 
-        Long loginUserId = (Long) session.getAttribute("login-userId");
+        Long loginUserId = (Long) session.getAttribute(SessionType.USER);
 
         Long scheduleOwnerId = schedule.getUser().getId();
         if(!scheduleOwnerId.equals(loginUserId)) {

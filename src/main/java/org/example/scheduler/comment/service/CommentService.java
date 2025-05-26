@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.example.scheduler.comment.dto.*;
 import org.example.scheduler.comment.entity.Comment;
 import org.example.scheduler.comment.repository.CommentRepository;
+import org.example.scheduler.common.SessionType;
 import org.example.scheduler.schedule.entity.Schedule;
 import org.example.scheduler.schedule.repository.ScheduleRepository;
 import org.example.scheduler.user.entity.User;
@@ -72,7 +73,7 @@ public class CommentService {
 
         HttpSession session = request.getSession();
 
-        Long logInUserId = (Long) session.getAttribute("login-userId");
+        Long logInUserId = (Long) session.getAttribute(SessionType.USER);
 
         if(!userId.equals(logInUserId)) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "This user is incorrect.");
 
